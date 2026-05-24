@@ -1,15 +1,19 @@
-# 🤖 Advisor AI — Intelligent Agent
+# 🤖 Advisor AI — Intelligent Financial Advisor Concierge
 
-> An AI-powered concierge for financial advisors at broker-dealer firms.  
-> Built as a mini-project submission by a fresher/intern.
+> A full-stack AI-powered web application that acts as a real-time intelligent assistant for financial advisors at broker-dealer firms.
 
 ---
 
 ## 📌 Problem Statement
 
-Financial advisors operate in a fragmented ecosystem — client data, portfolios, compliance rules, and market insights are spread across multiple systems. This leads to delayed responses, missed revenue, and compliance risks.
+Financial advisors operate in a fragmented ecosystem — client data, portfolios, compliance rules, and market insights are spread across multiple systems. This leads to:
 
-**Advisor AI** solves this by providing a real-time, conversational AI assistant that gives advisors instant access to their entire book of business.
+- Delayed client responses
+- Missed revenue opportunities
+- Inconsistent compliance adherence
+- High dependency on manual workflows
+
+**Advisor AI** solves this by providing a conversational AI assistant that gives advisors instant, data-driven answers about their entire book of business.
 
 ---
 
@@ -17,130 +21,111 @@ Financial advisors operate in a fragmented ecosystem — client data, portfolios
 
 | Module | What it does |
 |---|---|
-| 🤖 **AI Concierge** | Chat with Claude AI — ask anything about clients, portfolios, risks in plain English |
-| 📊 **Dashboard** | Real-time KPIs — AUM, compliance score, alerts, revenue opportunities |
+| 🤖 **AI Concierge** | Ask anything in plain English — get instant data-backed answers |
+| 📊 **Dashboard** | Live KPIs — Total AUM, compliance score, alerts, opportunities |
 | 👥 **Clients** | Full client book with search, filter, segment, risk profile |
-| 👤 **Client 360** | Deep dive — portfolio breakdown, life events, next best actions |
+| 👤 **Client 360** | Individual deep dive — portfolio, life events, next best actions |
 | 💹 **Portfolio** | Book-wide performance, alpha vs benchmark, rebalancing queue |
-| 🛡️ **Compliance** | Active alerts, resolve alerts, real-time pre-trade checker |
+| 🛡️ **Compliance** | Active alerts with severity levels and pre-trade compliance checker |
 
 ---
 
-## 🏗️ Architecture
-
-```
-advisor-ai/
-├── backend/               ← Python FastAPI
-│   ├── main.py            ← App entry point
-│   ├── database.py        ← SQLite + seed data
-│   ├── routes/
-│   │   ├── auth.py        ← JWT login/auth
-│   │   ├── chat.py        ← Claude AI integration
-│   │   ├── portfolio.py   ← Portfolio analytics
-│   │   ├── clients.py     ← Client management + insights
-│   │   └── compliance.py  ← Alerts + pre-trade checks
-│   └── requirements.txt
-│
-├── frontend/              ← React + Vite
-│   ├── src/
-│   │   ├── App.jsx        ← Router setup
-│   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Chat.jsx        ← Real AI chat
-│   │   │   ├── Clients.jsx
-│   │   │   ├── ClientDetail.jsx
-│   │   │   ├── Portfolio.jsx
-│   │   │   └── Compliance.jsx
-│   │   ├── components/
-│   │   │   └── Layout.jsx
-│   │   ├── services/
-│   │   │   └── api.js     ← All API calls
-│   │   └── hooks/
-│   │       └── useAuth.jsx
-│   └── package.json
-│
-└── README.md
-```
-
-### Tech Stack
+## 🏗️ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 18, Vite, Recharts, React Router |
-| Backend | Python 3.11+, FastAPI, Uvicorn |
-| AI / LLM | Claude (Anthropic API) via RAG-style context injection |
-| Database | SQLite (local, zero setup) |
-| Auth | JWT (python-jose) + bcrypt |
-| HTTP | Axios (frontend), HTTPX (backend) |
+| Frontend | React 18 + Vite 5 + React Router |
+| Backend | Python FastAPI + Uvicorn |
+| AI Model | Groq API — LLaMA 3.3 70B (Free tier) |
+| Database | SQLite — zero setup required |
+| Auth | JWT tokens + bcrypt password hashing |
+| AI Technique | RAG-style context injection |
 
 ---
+
+## 📁 Project Structureadvisor-ai/
+├── backend/
+│   ├── main.py            ← FastAPI app entry point
+│   ├── database.py        ← SQLite setup + 10 Indian client seed data
+│   ├── requirements.txt   ← Python dependencies
+│   ├── .env.example       ← Environment variables template
+│   └── routes/
+│       ├── auth.py        ← JWT login and authentication
+│       ├── chat.py        ← AI chat using Groq API
+│       ├── clients.py     ← Client management and insights
+│       ├── portfolio.py   ← Portfolio analytics
+│       └── compliance.py  ← Alerts and pre-trade checks
+│
+└── frontend/
+└── src/
+├── pages/         ← Dashboard, Chat, Clients, Portfolio, Compliance
+├── components/    ← Layout and sidebar
+├── services/      ← All API calls
+└── hooks/         ← Auth state management---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- An Anthropic API key (free at [console.anthropic.com](https://console.anthropic.com))
+- Python 3.11 or higher
+- Node.js 18 or higher
+- Free Groq API key from [console.groq.com](https://console.groq.com)
 
 ---
 
-### Step 1 — Clone the repo
+### Step 1 — Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/advisor-ai.git
+git clone https://github.com/SanjeevDharipalli/advisor-ai.git
 cd advisor-ai
 ```
 
 ---
 
-### Step 2 — Backend setup
+### Step 2 — Set up your API key
+
+```bash
+cd backend
+cp .env.example .env
+```
+
+Open `backend/.env` and add your Groq API key:GROQ_API_KEY=gsk_your_key_here
+SECRET_KEY=advisor-ai-secret-123Get a free key at [console.groq.com](https://console.groq.com) — no credit card needed.
+
+---
+
+### Step 3 — Start the Backend
 
 ```bash
 cd backend
 
 # Create virtual environment
-python -m venv venv
+python3 -m venv venv
 
 # Activate it
-# On Mac/Linux:
+# Mac/Linux:
 source venv/bin/activate
-# On Windows:
+# Windows:
 venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Create .env file
-cp .env.example .env
+# Start server
+python3 main.py
 ```
 
-Now open `.env` and add your Anthropic API key:
-```
-ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxx
-```
-
-Start the backend:
-```bash
-python main.py
-```
-
-Backend runs at: **http://localhost:8000**  
-API docs at: **http://localhost:8000/docs** (Swagger UI — auto-generated!)
+Backend runs at: **http://localhost:8000**
+API docs at: **http://localhost:8000/docs**
 
 ---
 
-### Step 3 — Frontend setup
+### Step 4 — Start the Frontend
 
-Open a new terminal:
+Open a **new terminal**:
 
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start the app
 npm run dev
 ```
 
@@ -148,80 +133,65 @@ Frontend runs at: **http://localhost:5173**
 
 ---
 
-### Step 4 — Login
+### Step 5 — Login
 
-Open **http://localhost:5173** in your browser.
-
-```
-Username: james.kumar
+Open **http://localhost:5173** in your browser.Username: arjun.sharma
 Password: advisor123
-```
-
 ---
 
 ## 🧠 How the AI Works
 
-The AI Chat uses **Claude by Anthropic** with a technique called **context injection** (similar to RAG):
+The AI uses **RAG-style context injection**:
 
-1. When you send a message, the backend **fetches real data** from the database (your clients, portfolios, compliance alerts)
-2. This data is **injected into the system prompt** sent to Claude
-3. Claude answers based on your actual client data — not generic responses
-4. The full conversation history is maintained per session
+1. You send a message in the chat
+2. Backend **fetches live data** from the database — clients, portfolios, compliance alerts
+3. This data is **injected into the prompt** sent to Groq's LLaMA 3.3 model
+4. The AI answers based on your **actual client data** — not generic responses
+5. Conversation history is saved per session
 
-This means when you ask *"What are the top risks in my book?"*, Claude actually analyzes your 10 real clients and gives a data-backed answer.
+When you ask *"Which clients need rebalancing?"* — the AI reads all 10 real client portfolios and gives a specific, data-backed answer.
 
----
+---## 💬 Sample AI Questions
+
+- *"Summarize my client portfolio performance today"*
+- *"What are the top risks in my book?"*
+- *"Which clients need rebalancing?"*---
 
 ## 📡 API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
 | POST | `/api/auth/login` | Login and get JWT token |
-| GET | `/api/auth/me` | Get current user |
+| GET | `/api/auth/me` | Get current user info |
 | POST | `/api/chat/message` | Send message to AI |
 | GET | `/api/portfolio/summary` | Book-wide portfolio summary |
-| GET | `/api/clients/` | List all clients (with filters) |
+| GET | `/api/clients/` | List all clients |
 | GET | `/api/clients/{id}` | Client 360 view |
-| GET | `/api/clients/insights/life-events` | Clients with life events |
-| GET | `/api/clients/insights/revenue-opportunities` | Cross-sell/upsell opps |
 | GET | `/api/compliance/alerts` | All compliance alerts |
 | POST | `/api/compliance/resolve/{id}` | Resolve an alert |
 | GET | `/api/compliance/pretrade-check/{id}` | Pre-trade compliance check |
 
----
+---## 👥 Seed Data
 
-## 🧪 Sample AI Questions to Try
+The database is automatically seeded with **10 realistic Indian client profiles**:
 
-- *"Summarize my client portfolio performance today"*
-- *"What are the top risks in my book?"*
-- *"Prepare a client 360 summary for Sarah Chen"*
-- *"Which clients need rebalancing?"*
-- *"What are my cross-sell and upsell opportunities?"*
-- *"Run a compliance check — any violations?"*
-- *"Show me clients with life events detected recently"*
-- *"Who are my top performing clients this year?"*
+- **UHNW clients** — Rajesh Mehta, Sunita Patel, Vikram Reddy, Deepak Joshi, Kavitha Venkatesh
+- **HNW clients** — Priya Sharma, Arjun Nair, Ananya Krishnan, Meera Iyer
+- **Mass Affluent** — Rahul Gupta
 
----
+Across Conservative, Moderate, and Aggressive risk profiles with real life events like business sales, retirement planning, and inheritance.
 
-## 📈 Future Enhancements (Phase 3 & 4 from Problem Statement)
+---## 📈 Future Roadmap
 
-- **Voice interface** — Speech-to-text + text-to-speech
-- **AWS deployment** — Deploy to EC2/ECS with RDS (PostgreSQL)
-- **Real CRM integration** — Salesforce, Redtail
-- **Streaming responses** — Real-time token streaming from Claude
-- **Market data feeds** — Live prices via Alpha Vantage / Yahoo Finance
-- **RAG with vector DB** — Store research reports in OpenSearch/Pinecone
-- **Autonomous agents** — Auto-trigger rebalancing proposals
+- Voice interface — Speech-to-text in the chat
+- AWS deployment — EC2 backend, S3 frontend, RDS database
+- Real CRM integration — Salesforce API
+- Streaming AI responses — Word by word like ChatGPT
+- Vector database — OpenSearch for research document search
+- Live market data — Real portfolio prices via financial APIs
 
----
+---## 👤 Author
 
-## 👤 Author
+Built as a fresher/intern mini-project submission for the Advisor AI — Intelligent Agent problem statement.
 
-Built as a fresher/intern mini-project submission.  
-Stack chosen for simplicity, readability, and real-world relevance.
-
----
-
-## 📄 License
-
-MIT License — free to use and modify.
+Stack chosen for modern architecture, real-world relevance, and clean separation of concerns.
